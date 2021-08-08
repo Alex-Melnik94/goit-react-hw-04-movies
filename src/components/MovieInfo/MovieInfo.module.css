@@ -1,0 +1,11 @@
+.container {
+  display: flex;
+}
+
+.infoContainer {
+  margin-left: 20px;
+}
+
+.text {
+  margin-bottom: 15px;
+}
