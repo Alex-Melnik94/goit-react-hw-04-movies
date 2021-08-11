@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import * as MoviesApi from '../services/api-service';
-import Searchbar from '../components/Searchbar/Searchbar';
+import * as MoviesApi from '../../services/api-service';
+import Searchbar from '../../components/Searchbar/Searchbar';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 
 export default function MoviesPage() {
@@ -32,7 +32,14 @@ export default function MoviesPage() {
         <ul>
           {films.map(film => (
             <li key={film.id}>
-              <Link to={`/movies/${film.id}`}>{film.original_title}</Link>
+              <Link
+                to={{
+                  pathname: `/movies/${film.id}`,
+                  state: { from: location },
+                }}
+              >
+                {film.original_title}
+              </Link>
             </li>
           ))}
         </ul>

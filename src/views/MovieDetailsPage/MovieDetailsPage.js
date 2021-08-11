@@ -5,16 +5,17 @@ import {
   Route,
   useRouteMatch,
   useHistory,
+  useLocation,
   Switch,
 } from 'react-router-dom';
-import * as MoviesApi from '../services/api-service';
-import MovieInfo from '../components/MovieInfo/MovieInfo';
+import * as MoviesApi from '../../services/api-service';
+import MovieInfo from '../../components/MovieInfo/MovieInfo';
 import Loader from 'react-loader-spinner';
-import styles from './views.module.css';
+import styles from './MovieDetailsPage.module.css';
 
-const Cast = lazy(() => import('./Cast' /* webpackCunkName: "Cast" */));
+const Cast = lazy(() => import('../Cast/Cast' /* webpackCunkName: "Cast" */));
 const Reviews = lazy(() =>
-  import('./Reviews' /* webpackCunkName: "Reviews" */),
+  import('../Reviews/Reviews' /* webpackCunkName: "Reviews" */),
 );
 
 export default function MovieDetailsPage() {
@@ -22,6 +23,7 @@ export default function MovieDetailsPage() {
   const { movieId } = useParams();
   const [movie, setMovie] = useState(null);
   const history = useHistory();
+  const location = useLocation();
 
   useEffect(() => {
     if (movieId) {
@@ -30,7 +32,7 @@ export default function MovieDetailsPage() {
   }, [movieId]);
 
   const onBackBtnClick = () => {
-    history.goBack();
+    history.push(location?.state?.from ?? '/');
   };
 
   return (
@@ -42,10 +44,24 @@ export default function MovieDetailsPage() {
       <h3>Additional information:</h3>
       <ul>
         <li>
-          <NavLink to={`${url}/cast`}>Cast</NavLink>
+          <NavLink
+            to={{
+              pathname: `${url}/cast`,
+              state: { from: location?.state?.from ?? '/' },
+            }}
+          >
+            Cast
+          </NavLink>
         </li>
         <li>
-          <NavLink to={`${url}/reviews`}>Reviews</NavLink>
+          <NavLink
+            to={{
+              pathname: `${url}/reviews`,
+              state: { from: location?.state?.from ?? '/' },
+            }}
+          >
+            Reviews
+          </NavLink>
         </li>
       </ul>
       <hr />

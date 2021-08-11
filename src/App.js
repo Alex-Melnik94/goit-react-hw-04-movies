@@ -1,17 +1,19 @@
 import { lazy, Suspense } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import styles from './App.module.css';
 import AppBar from './components/AppBar/AppBar';
 import Loader from 'react-loader-spinner';
 
 const HomePage = lazy(() =>
-  import('./views/HomePage' /* webpackCunkName: "HomePage" */),
+  import('./views/HomePage/HomePage' /* webpackCunkName: "HomePage" */),
 );
 const MoviesPage = lazy(() =>
-  import('./views/MoviesPage' /* webpackCunkName: "MoviesPage" */),
+  import('./views/MoviesPage/MoviesPage' /* webpackCunkName: "MoviesPage" */),
 );
 const MovieDetailsPage = lazy(() =>
-  import('./views/MovieDetailsPage' /* webpackCunkName: "MovieDetailsPage" */),
+  import(
+    './views/MovieDetailsPage/MovieDetailsPage' /* webpackCunkName: "MovieDetailsPage" */
+  ),
 );
 
 export default function App() {
@@ -42,9 +44,7 @@ export default function App() {
             <MovieDetailsPage />
           </Route>
 
-          <Route path="*">
-            <HomePage />
-          </Route>
+          <Route render={() => <Redirect to={{ pathname: '/' }} />} />
         </Switch>
       </Suspense>
     </div>

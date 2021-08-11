@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import * as MoviesApi from '../services/api-service';
-import styles from './views.module.css';
+import * as MoviesApi from '../../services/api-service';
+import styles from './Cast.module.css';
 
 export default function Cast() {
   const { movieId } = useParams();
